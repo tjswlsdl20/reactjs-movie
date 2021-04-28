@@ -1,34 +1,35 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-
-function Food(pp) {
-  return (
-    <div>
-      <h1>{pp.name}</h1>
-      <img sec={pp.shasin} alt='some value' />
-    </div>
-  );
-}
-
-
-
-
-
+import Movie from './Movie';
 
 function App() {
-  useEffect(async () => {
-    const dada = await axios.get('https://yts-proxy.nomadcoders1.now.sh/list_movies.json');
-    console.log(dada);
-  });
   let [star, starupdate] = useState(0);
+  let [movie, movieUpdate] = useState([]);
+  useEffect(() => {
+    async function fetchData() {
+      // You can await here
+      const dada = await axios.get('https://yts-proxy.nomadcoders1.now.sh/list_movies.json');
+
+      movieUpdate(dada.data.data.movies);
+
+      // ...
+    }
+    fetchData();
+  }, []);
+
+
   return (
     <div>
       <h1><span onClick={() => { starupdate(star + 1) }}>😁</span>{star}</h1>
-      {foodILike.map(dish =>
+      {movie.map(info => (
+        <Movie key={info.id}
+          id={info.id}
+          year={info.year}
+          title={info.title}
+          summary={info.summary}
+          poster={info.medium_cover_image} />
+      ))}
 
-        <Food name={dish.name} shasin={dish.image} />
-
-      )}
     </div>
   );
 }
