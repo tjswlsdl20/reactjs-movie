@@ -1,25 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
-function App() {
+function Food(pp) {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>{pp.name}</h1>
+      <img sec={pp.shasin} alt='some value' />
     </div>
   );
 }
+
+
+
+
+
+
+function App() {
+  useEffect(async () => {
+    const dada = await axios.get('https://yts-proxy.nomadcoders1.now.sh/list_movies.json');
+    console.log(dada);
+  });
+  let [star, starupdate] = useState(0);
+  return (
+    <div>
+      <h1><span onClick={() => { starupdate(star + 1) }}>😁</span>{star}</h1>
+      {foodILike.map(dish =>
+
+        <Food name={dish.name} shasin={dish.image} />
+
+      )}
+    </div>
+  );
+}
+
 
 export default App;
